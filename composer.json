@@ -1,6 +1,8 @@
 {
     "name": "simplesurance/omnipay",
     "description": "simplesurance Omnipay Libraries",
+    "license": "MIT",
+    "keywords": ["omnipay", "payment", "gateway", "provider"],
     "type": "library",
     "require": {
         "omnipay/common": "~3.0"

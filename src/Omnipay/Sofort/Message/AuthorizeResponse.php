@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Sofort\Message;
+namespace simplesurance\Omnipay\Sofort\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Asci\Omnipay\SaferPay\Message;
+namespace simplesurance\Omnipay\Saferpay\Message;
 
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Message\RedirectResponseInterface;
@@ -9,9 +9,9 @@ class CompleteAuthorizeResponse extends Response implements RedirectResponseInte
 {
     protected $isSuccessful = false;
 
-    protected $transactionReference = null;
+    protected $transactionReference;
 
-    protected $token = null;
+    protected $token;
 
     public function __construct(RequestInterface $request, $response)
     {

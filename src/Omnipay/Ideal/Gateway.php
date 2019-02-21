@@ -1,10 +1,10 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal;
+namespace simplesurance\Omnipay\Ideal;
 
-use Bamarni\Omnipay\Ideal\Message\CompleteAuthorizeRequest;
-use Bamarni\Omnipay\Ideal\Message\FetchIssuersRequest;
-use Bamarni\Omnipay\Ideal\Message\PurchaseRequest;
+use simplesurance\Omnipay\Ideal\Message\CompleteAuthorizeRequest;
+use simplesurance\Omnipay\Ideal\Message\FetchIssuersRequest;
+use simplesurance\Omnipay\Ideal\Message\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 
 class Gateway extends AbstractGateway

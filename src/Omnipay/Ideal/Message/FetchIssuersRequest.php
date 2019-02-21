@@ -1,6 +1,6 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal\Message;
+namespace simplesurance\Omnipay\Ideal\Message;
 
 class FetchIssuersRequest extends AbstractRequest
 {

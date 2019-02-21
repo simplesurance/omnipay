@@ -1,6 +1,6 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business\Message;
+namespace simplesurance\Omnipay\SaferpayBusiness\Message;
 
 class RegisterCardRequest extends AbstractRequest
 {

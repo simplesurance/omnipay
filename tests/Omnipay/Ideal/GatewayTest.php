@@ -1,12 +1,16 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal\Tests;
+namespace simplesurance\Tests\Omnipay\Ideal\Tests;
 
-use Bamarni\Omnipay\Ideal\Gateway;
 use Omnipay\Tests\GatewayTestCase;
+use simplesurance\Omnipay\Ideal\Gateway;
+use simplesurance\Omnipay\Ideal\Message\FetchIssuersResponse;
 
 class GatewayTest extends GatewayTestCase
 {
+    /** @var Gateway */
+    protected $gateway;
+
     public function setUp()
     {
         parent::setUp();
@@ -22,13 +26,14 @@ class GatewayTest extends GatewayTestCase
         ]);
     }
 
-    public function testFetchIssuersSuccess()
+    public function testFetchIssuersSuccess(): void
     {
         $this->setMockHttpResponse('FetchIssuersSuccess.txt');
 
+        /** @var FetchIssuersResponse $response */
         $response = $this->gateway->fetchIssuers()->send();
 
-        $this->assertInstanceOf('\Bamarni\Omnipay\Ideal\Message\FetchIssuersResponse', $response);
+        $this->assertInstanceOf(FetchIssuersResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
 
         $expectedIssuers = [

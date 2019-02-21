@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Sofort\Message;
+namespace simplesurance\Omnipay\Saferpay\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
@@ -10,7 +10,7 @@ class Response extends AbstractResponse
     public function __construct(RequestInterface $request, $response)
     {
         $this->request = $request;
-        $this->data = simplexml_load_string((string) $response->getBody());
+        $this->data = (string) $response->getBody();
     }
 
     public function isSuccessful()
@@ -29,6 +29,11 @@ class Response extends AbstractResponse
     }
 
     public function getRedirectUrl()
+    {
+        return null;
+    }
+
+    public function getMessage()
     {
         return null;
     }

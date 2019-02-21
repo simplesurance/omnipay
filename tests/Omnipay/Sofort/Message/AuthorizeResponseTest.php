@@ -1,12 +1,13 @@
 <?php
 
-namespace Omnipay\Sofort\Message;
+namespace simplesurance\Tests\Omnipay\Sofort\Message;
 
 use Omnipay\Tests\TestCase;
+use simplesurance\Omnipay\Sofort\Message\AuthorizeResponse;
 
 class AuthorizeResponseTest extends TestCase
 {
-    public function testAuthorizeSuccess()
+    public function testAuthorizeSuccess(): void
     {
         $httpResponse = $this->getMockHttpResponse('AuthorizeSuccess.txt');
         $response = new AuthorizeResponse($this->getMockRequest(), $httpResponse);
@@ -19,7 +20,7 @@ class AuthorizeResponseTest extends TestCase
         $this->assertSame('GET', $response->getRedirectMethod());
     }
 
-    public function testAuthorizeFailure()
+    public function testAuthorizeFailure(): void
     {
         $httpResponse = $this->getMockHttpResponse('AuthorizeFailure.txt');
         $response = new AuthorizeResponse($this->getMockRequest(), $httpResponse);

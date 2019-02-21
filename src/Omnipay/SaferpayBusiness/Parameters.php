@@ -1,6 +1,6 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business;
+namespace simplesurance\Omnipay\SaferpayBusiness;
 
 trait Parameters
 {

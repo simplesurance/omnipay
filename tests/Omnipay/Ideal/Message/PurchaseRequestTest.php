@@ -1,13 +1,13 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal\Tests\Message;
+namespace simplesurance\Tests\Omnipay\Ideal\Tests\Message;
 
-use Bamarni\Omnipay\Ideal\Message\PurchaseRequest;
+use simplesurance\Omnipay\Ideal\Message\PurchaseRequest;
 use Omnipay\Tests\TestCase;
 
 class PurchaseRequestTest extends TestCase
 {
-    public function testGetData()
+    public function testGetData(): void
     {
         $request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 
@@ -29,7 +29,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals($initialData['amount'], $data['amount']);
     }
 
-    public function testGetDataInTestMode()
+    public function testGetDataInTestMode(): void
     {
         $request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 

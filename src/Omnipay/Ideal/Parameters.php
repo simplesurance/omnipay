@@ -1,6 +1,6 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal;
+namespace simplesurance\Omnipay\Ideal;
 
 trait Parameters
 {

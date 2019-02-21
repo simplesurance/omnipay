@@ -1,8 +1,10 @@
 <?php
 
-namespace Omnipay\Sofort;
+namespace simplesurance\Omnipay\Sofort;
 
 use Omnipay\Common\AbstractGateway;
+use simplesurance\Omnipay\Sofort\Message\AuthorizeRequest;
+use simplesurance\Omnipay\Sofort\Message\CompleteAuthorizeRequest;
 
 class Gateway extends AbstractGateway
 {
@@ -63,12 +65,12 @@ class Gateway extends AbstractGateway
 
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Sofort\Message\AuthorizeRequest', $parameters);
+        return $this->createRequest(AuthorizeRequest::class, $parameters);
     }
 
     public function completeAuthorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Sofort\Message\CompleteAuthorizeRequest', $parameters);
+        return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
     }
 
     public function purchase(array $parameters = array())

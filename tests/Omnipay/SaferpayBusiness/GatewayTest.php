@@ -1,9 +1,10 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business\Tests;
+namespace simplesurance\Tests\Omnipay\SaferpayBusiness;
 
-use Bamarni\Omnipay\Saferpay\Business\Gateway;
 use Omnipay\Tests\GatewayTestCase;
+use simplesurance\Omnipay\SaferpayBusiness\Gateway;
+use simplesurance\Omnipay\SaferpayBusiness\Message\CompleteAuthorizeResponse;
 
 class GatewayTest extends GatewayTestCase
 {
@@ -18,7 +19,7 @@ class GatewayTest extends GatewayTestCase
         ]);
     }
 
-    public function testCompleteAuthorizeSuccess()
+    public function testCompleteAuthorizeSuccess(): void
     {
         $this->setMockHttpResponse('CompleteAuthorizeSuccess.txt');
 
@@ -27,7 +28,7 @@ class GatewayTest extends GatewayTestCase
             'IBAN' => 'DE17970000011234567890',
         ])->send();
 
-        $this->assertInstanceOf('\Bamarni\Omnipay\Saferpay\Business\Message\CompleteAuthorizeResponse', $response);
+        $this->assertInstanceOf(CompleteAuthorizeResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
 
         $this->assertEquals('Y29lE1bjxztCSAAfW85UA96I6Utb', $response->getTransactionReference());

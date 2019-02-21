@@ -1,8 +1,12 @@
 <?php
 
-namespace Bamarni\Omnipay\Saferpay\Business;
+namespace simplesurance\Omnipay\SaferpayBusiness;
 
 use Omnipay\Common\AbstractGateway;
+use simplesurance\Omnipay\SaferpayBusiness\Message\AuthorizeRequest;
+use simplesurance\Omnipay\SaferpayBusiness\Message\CompleteAuthorizeRequest;
+use simplesurance\Omnipay\SaferpayBusiness\Message\CompleteRegisterCardRequest;
+use simplesurance\Omnipay\SaferpayBusiness\Message\RegisterCardRequest;
 
 class Gateway extends AbstractGateway
 {
@@ -22,21 +26,21 @@ class Gateway extends AbstractGateway
 
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Bamarni\Omnipay\Saferpay\Business\Message\AuthorizeRequest', $parameters);
+        return $this->createRequest(AuthorizeRequest::class, $parameters);
     }
 
     public function completeAuthorize(array $parameters = array())
     {
-        return $this->createRequest('\Bamarni\Omnipay\Saferpay\Business\Message\CompleteAuthorizeRequest', $parameters);
+        return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
     }
 
     public function registerCard(array $parameters = array())
     {
-        return $this->createRequest('\Bamarni\Omnipay\Saferpay\Business\Message\RegisterCardRequest', $parameters);
+        return $this->createRequest(RegisterCardRequest::class, $parameters);
     }
 
     public function completeRegisterCard(array $parameters = array())
     {
-        return $this->createRequest('\Bamarni\Omnipay\Saferpay\Business\Message\CompleteRegisterCardRequest', $parameters);
+        return $this->createRequest(CompleteRegisterCardRequest::class, $parameters);
     }
 }

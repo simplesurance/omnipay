@@ -1,7 +1,10 @@
 <?php
 
-namespace Omnipay\Sofort;
+namespace simplesurance\Tests\Omnipay\Sofort;
 
+use simplesurance\Omnipay\Sofort\Gateway;
+use simplesurance\Omnipay\Sofort\Message\AuthorizeResponse;
+use simplesurance\Omnipay\Sofort\Message\CompleteAuthorizeResponse;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -13,7 +16,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
     }
 
-    public function testAuthorizeSuccess()
+    public function testAuthorizeSuccess(): void
     {
         $options = array(
             'amount' => '10.00',
@@ -23,17 +26,18 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockHttpResponse('AuthorizeSuccess.txt');
 
+        /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Sofort\Message\AuthorizeResponse', $response);
+        $this->assertInstanceOf(AuthorizeResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.sofort.com/payment/go/dd853fc10480b7b6b1ae47252a973166e96aab5b', $response->getRedirectUrl());
     }
 
-    public function testAuthorizeFailure()
+    public function testAuthorizeFailure(): void
     {
-        $this->options = array(
+        $options = array(
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
@@ -41,7 +45,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockHttpResponse('AuthorizeFailure.txt');
 
-        $response = $this->gateway->authorize($this->options)->send();
+        $response = $this->gateway->authorize($options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -49,7 +53,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('8015: Amount is out of range. ', $response->getMessage());
     }
 
-    public function testCompleteAuthorizeSuccess()
+    public function testCompleteAuthorizeSuccess(): void
     {
         $this->setMockHttpResponse('CompleteAuthorizeSuccess.txt');
 
@@ -57,7 +61,7 @@ class GatewayTest extends GatewayTestCase
 
         $response = $this->gateway->completeAuthorize($options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Sofort\Message\CompleteAuthorizeResponse', $response);
+        $this->assertInstanceOf(CompleteAuthorizeResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
     }
@@ -70,7 +74,7 @@ class GatewayTest extends GatewayTestCase
 
         $response = $this->gateway->completeAuthorize($options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Sofort\Message\CompleteAuthorizeResponse', $response);
+        $this->assertInstanceOf(CompleteAuthorizeResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
     }

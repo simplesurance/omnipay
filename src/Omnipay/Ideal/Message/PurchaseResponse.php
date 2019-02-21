@@ -1,6 +1,6 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal\Message;
+namespace simplesurance\Omnipay\Ideal\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;

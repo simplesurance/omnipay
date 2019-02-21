@@ -1,8 +1,8 @@
 <?php
 
-namespace Bamarni\Omnipay\Ideal\Message;
+namespace simplesurance\Omnipay\Ideal\Message;
 
-use Bamarni\Omnipay\Ideal\Parameters;
+use simplesurance\Omnipay\Ideal\Parameters;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {

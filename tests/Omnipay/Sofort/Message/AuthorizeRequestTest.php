@@ -1,12 +1,13 @@
 <?php
 
-namespace Omnipay\Sofort\Message;
+namespace simplesurance\Tests\Omnipay\Sofort\Message;
 
 use Omnipay\Tests\TestCase;
+use simplesurance\Omnipay\Sofort\Message\AuthorizeRequest;
 
 class AuthorizeRequestTest extends TestCase
 {
-    public function testGetData()
+    public function testGetData(): void
     {
         $request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
 
@@ -33,7 +34,7 @@ class AuthorizeRequestTest extends TestCase
         $this->assertSame('1', (string) $data->su->customer_protection);
     }
 
-    public function testGetDataWithMultilineDescription()
+    public function testGetDataWithMultilineDescription(): void
     {
         $request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
 

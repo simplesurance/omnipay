@@ -1,0 +1,17 @@
+{
+    "name": "simplesurance/omnipay",
+    "description": "simplesurance Omnipay Libraries",
+    "type": "library",
+    "require": {
+        "omnipay/common": "~3.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "*"
+    },
+    "authors": [
+        {
+            "name": "Jose' Pedro Saraiva",
+            "email": "js@simplesurance.de"
+        }
+    ]
+}

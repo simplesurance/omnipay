@@ -1,12 +1,21 @@
 {
     "name": "simplesurance/omnipay",
     "description": "simplesurance Omnipay Libraries",
+    "license": "MIT",
+    "keywords": ["omnipay", "payment", "gateway", "provider"],
     "type": "library",
     "require": {
+        "php": ">=7.1",
         "omnipay/common": "~3.0"
     },
     "require-dev": {
         "omnipay/tests": "*"
+    },
+    "autoload": {
+        "psr-4": { "simplesurance\\" : "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "simplesurance\\Tests\\" : "tests/" }
     },
     "authors": [
         {

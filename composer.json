@@ -11,6 +11,12 @@
     "require-dev": {
         "omnipay/tests": "*"
     },
+    "autoload": {
+        "psr-4": { "simplesurance\\" : "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "simplesurance\\Tests\\" : "tests/" }
+    },
     "authors": [
         {
             "name": "Jose' Pedro Saraiva",

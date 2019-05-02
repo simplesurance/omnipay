@@ -16,6 +16,24 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
     }
 
+    public function testAuthorizeSuccessJPY(): void
+    {
+        $options = array(
+            'amount' => '10000',
+            'currency' => 'JPY',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+        );
+
+        $this->setMockHttpResponse('AuthorizeSuccess.txt');
+
+        $this->gateway->authorize($options)->send();
+
+        foreach ($this->getMockedRequests() as $mockedRequest) {
+            $this->assertContains('AMOUNT=10000&', $mockedRequest->getUri()->getQuery());
+        }
+    }
+
     public function testAuthorizeSuccess(): void
     {
         $options = array(
@@ -28,6 +46,10 @@ class GatewayTest extends GatewayTestCase
 
         /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($options)->send();
+
+        foreach ($this->getMockedRequests() as $mockedRequest) {
+            $this->assertContains('AMOUNT=1000&', $mockedRequest->getUri()->getQuery());
+        }
 
         $this->assertInstanceOf(AuthorizeResponse::class, $response);
         $this->assertFalse($response->isSuccessful());

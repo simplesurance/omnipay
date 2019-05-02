@@ -160,7 +160,7 @@ class AuthorizeRequest extends AbstractRequest
     {
         $data = array(
             'ACCOUNTID' => $this->getAccountId(),
-            'AMOUNT' => $this->getAmount() * 100,
+            'AMOUNT' => $this->getAmount() * (10 ** $this->getCurrencyDecimalPlaces()),
             'CURRENCY' => $this->getCurrency(),
             'ORDERID' => $this->getOrderId(),
             'SUCCESSLINK' => $this->getReturnUrl(),

@@ -64,6 +64,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf(CompleteAuthorizeResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
+        $this->assertEquals('55742-165747-52441DAF-3596', $response->getTransactionReference());
     }
 
     public function testCompleteAuthorizeFailure()

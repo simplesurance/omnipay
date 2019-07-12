@@ -11,4 +11,9 @@ class CompleteAuthorizeResponse extends Response implements RedirectResponseInte
         return isset($this->data->transaction_details) &&
             false === in_array($this->data->transaction_details->status, array('loss', 'refunded'));
     }
+
+    public function getTransactionReference()
+    {
+        return $this->data->transaction_details->transaction;
+    }
 }

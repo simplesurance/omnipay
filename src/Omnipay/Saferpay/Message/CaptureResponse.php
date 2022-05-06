@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Saferpay\Message;
 
-use Omnipay\Common\Message\RedirectResponseInterface;
-
-class CaptureResponse extends Response implements RedirectResponseInterface
+class CaptureResponse extends Response
 {
+    private const CAPTURED = 'CAPTURED';
+
     public function isSuccessful()
     {
-        return 0 === strpos($this->data, 'OK');
+        $data = $this->parseData();
+
+        $status = $data['Status'] ?? '';
+
+        return self::CAPTURED === $status;
     }
 
     public function getMessage()

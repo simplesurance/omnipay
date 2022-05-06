@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Tests\Omnipay\Sofort;
 
+use Omnipay\Tests\GatewayTestCase;
 use simplesurance\Omnipay\Sofort\Gateway;
 use simplesurance\Omnipay\Sofort\Message\AuthorizeResponse;
 use simplesurance\Omnipay\Sofort\Message\CompleteAuthorizeResponse;
-use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -18,11 +20,11 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess(): void
     {
-        $options = array(
+        $options = [
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-        );
+        ];
 
         $this->setMockHttpResponse('AuthorizeSuccess.txt');
 
@@ -37,11 +39,11 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure(): void
     {
-        $options = array(
+        $options = [
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-        );
+        ];
 
         $this->setMockHttpResponse('AuthorizeFailure.txt');
 
@@ -57,7 +59,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('CompleteAuthorizeSuccess.txt');
 
-        $options = array('transactionId' => '55742-165747-52441DAF-3596');
+        $options = ['transactionId' => '55742-165747-52441DAF-3596'];
 
         $response = $this->gateway->completeAuthorize($options)->send();
 
@@ -71,7 +73,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('CompleteAuthorizeFailure.txt');
 
-        $options = array();
+        $options = [];
 
         $response = $this->gateway->completeAuthorize($options)->send();
 

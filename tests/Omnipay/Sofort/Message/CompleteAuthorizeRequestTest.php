@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Tests\Omnipay\Sofort\Message;
 
 use Omnipay\Tests\TestCase;
@@ -10,7 +12,7 @@ class CompleteAuthorizeRequestTest extends TestCase
     public function testGetData(): void
     {
         $request = new CompleteAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
-        $request->initialize(array('transactionId' => '55742-165747-52441DAF-3596'));
+        $request->initialize(['transactionId' => '55742-165747-52441DAF-3596']);
 
         $data = $request->getData();
 

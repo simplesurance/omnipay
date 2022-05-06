@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Sofort;
 
 use Omnipay\Common\AbstractGateway;
@@ -15,12 +17,12 @@ class Gateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        return array(
+        return [
             'username' => '',
             'password' => '',
             'projectId' => '',
             'testMode' => true,
-        );
+        ];
     }
 
     public function getUsername()
@@ -63,17 +65,17 @@ class Gateway extends AbstractGateway
         return $this->setParameter('country', $value);
     }
 
-    public function authorize(array $parameters = array())
+    public function authorize(array $parameters = [])
     {
         return $this->createRequest(AuthorizeRequest::class, $parameters);
     }
 
-    public function completeAuthorize(array $parameters = array())
+    public function completeAuthorize(array $parameters = [])
     {
         return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
     }
 
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = [])
     {
         return $this->authorize($parameters);
     }

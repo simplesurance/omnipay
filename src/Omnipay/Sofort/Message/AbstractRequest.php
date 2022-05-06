@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Sofort\Message;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest

@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Saferpay\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 class Response extends AbstractResponse
 {
-    public function __construct(RequestInterface $request, $response)
+    public function __construct(RequestInterface $request, HttpResponseInterface $response)
     {
         $this->request = $request;
         $this->data = (string) $response->getBody();
@@ -36,5 +39,15 @@ class Response extends AbstractResponse
     public function getMessage()
     {
         return null;
+    }
+
+    protected function parseData(): array
+    {
+        $data = json_decode($this->data, true);
+        if (!is_array($data)) {
+            throw new \RuntimeException('Unable to parse data');
+        }
+
+        return $data;
     }
 }

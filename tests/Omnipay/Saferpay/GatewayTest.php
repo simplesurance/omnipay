@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Tests\Omnipay\Saferpay;
 
 use Omnipay\Tests\GatewayTestCase;
@@ -9,7 +11,7 @@ use simplesurance\Omnipay\Saferpay\Message\CompleteAuthorizeResponse;
 
 class GatewayTest extends GatewayTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -18,12 +20,12 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccessJPY(): void
     {
-        $options = array(
+        $options = [
             'amount' => '10000',
             'currency' => 'JPY',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-        );
+        ];
 
         $this->setMockHttpResponse('AuthorizeSuccess.txt');
 
@@ -36,11 +38,11 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess(): void
     {
-        $options = array(
+        $options = [
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-        );
+        ];
 
         $this->setMockHttpResponse('AuthorizeSuccess.txt');
 
@@ -62,9 +64,9 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorizeDescriptionIsHtmlEncoded(): void
     {
-        $options = array(
+        $options = [
             'description' => 'Zażółć gęślą jaźń',
-        );
+        ];
 
         $requestData = $this->gateway->authorize($options)->getData();
 
@@ -73,11 +75,11 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure(): void
     {
-        $options = array(
+        $options = [
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-        );
+        ];
 
         $this->setMockHttpResponse('AuthorizeFailure.txt');
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Tests\Omnipay\Sofort\Message;
 
 use Omnipay\Tests\TestCase;
@@ -11,7 +13,7 @@ class AuthorizeRequestTest extends TestCase
     {
         $request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
 
-        $request->initialize(array(
+        $request->initialize([
             'amount' => '10.00',
             'currency' => 'EUR',
             'description' => 'Order Description',
@@ -19,7 +21,7 @@ class AuthorizeRequestTest extends TestCase
             'cancelUrl' => 'https://www.example.com/cancel',
             'notifyUrl' => 'https://www.example.com/notify',
             'country' => 'de',
-        ));
+        ]);
 
         $data = $request->getData();
 
@@ -38,15 +40,15 @@ class AuthorizeRequestTest extends TestCase
     {
         $request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
 
-        $request->initialize(array(
+        $request->initialize([
                 'amount' => '10.00',
                 'currency' => 'EUR',
-                'description' => array('Order Description line 1', 'Order Description line 2'),
+                'description' => ['Order Description line 1', 'Order Description line 2'],
                 'returnUrl' => 'https://www.example.com/return',
                 'cancelUrl' => 'https://www.example.com/cancel',
                 'notifyUrl' => 'https://www.example.com/notify',
                 'country' => 'de',
-            ));
+            ]);
 
         $data = $request->getData();
 

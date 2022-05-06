@@ -1,46 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Saferpay\Message;
 
-use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Common\Message\RedirectResponseInterface;
-
-class CompleteAuthorizeResponse extends Response implements RedirectResponseInterface
+class CompleteAuthorizeResponse extends Response
 {
-    protected $isSuccessful = false;
-
-    protected $transactionReference;
-
-    protected $token;
-
-    public function __construct(RequestInterface $request, $response)
-    {
-        parent::__construct($request, $response);
-
-        if (preg_match('/^OK:ID=(.*)\&TOKEN=(.*)$/', $this->data, $matches)) {
-            $this->isSuccessful = true;
-            $this->transactionReference = $matches[1];
-            $this->token = $matches[2];
-        }
-    }
+    private const AUTHORISED = 'AUTHORIZED';
+    private const CAPTURED = 'CAPTURED';
 
     public function isSuccessful()
     {
-        return $this->isSuccessful;
+        $data = $this->parseData();
+
+        if (empty($data['Transaction']['Status'])) {
+            return false;
+        }
+
+        return in_array(
+            $data['Transaction']['Status'],
+            [self::AUTHORISED, self::CAPTURED],
+            true
+        );
+    }
+
+    public function getTransactionReference()
+    {
+        $data = $this->parseData();
+
+        if (empty($data['Transaction']['Id'])) {
+            throw new \RuntimeException('Unable to fetch transaction reference');
+        }
+
+        return $data['Transaction']['Id'];
     }
 
     public function getMessage()
     {
         return $this->data;
-    }
-
-    public function getTransactionReference()
-    {
-        return $this->transactionReference;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
     }
 }

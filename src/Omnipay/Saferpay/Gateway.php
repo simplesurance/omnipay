@@ -1,142 +1,97 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Saferpay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Message\AbstractRequest;
+use simplesurance\Omnipay\Interfaces\AuthorizeDirectInterface;
+use simplesurance\Omnipay\Saferpay\Message\AuthorizeDirectRequest;
 use simplesurance\Omnipay\Saferpay\Message\AuthorizeRequest;
 use simplesurance\Omnipay\Saferpay\Message\CaptureRequest;
 use simplesurance\Omnipay\Saferpay\Message\CompleteAuthorizeRequest;
 
-class Gateway extends AbstractGateway
+class Gateway extends AbstractGateway implements AuthorizeDirectInterface
 {
     public function getName()
     {
         return 'SaferPay';
     }
 
-    public function getDefaultParameters()
-    {
-        return array(
-            'testMode' => false,
-        );
-    }
-
-    public function getAccountId()
-    {
-        return $this->getParameter('accountId');
-    }
-
-    public function setAccountId($value)
-    {
-        return $this->setParameter('accountId', $value);
-    }
-
-    public function setSpPassword($value)
-    {
-        $this->setParameter('spPassword', $value);
-    }
-
-    public function getSpPassword()
-    {
-        return $this->getParameter('spPassword');
-    }
-
-    public function getLangId()
+    public function getLangId(): string
     {
         return $this->getParameter('langId');
     }
 
-    public function setLangId($value)
+    public function setLangId(string $langId): self
     {
-        return $this->setParameter('langId', $value);
+        return $this->setParameter('langId', $langId);
     }
 
-    public function getVtConfig()
+    public function getUsername(): string
     {
-        return $this->getParameter('vtConfig');
+        return $this->getParameter('username');
     }
 
-    public function setVtConfig($value)
+    public function setUsername(string $username): self
     {
-        return $this->setParameter('vtConfig', $value);
+        return $this->setParameter('username', $username);
     }
 
-    public function getAutoClose()
+    public function getPassword(): string
     {
-        return $this->getParameter('autoClose');
+        return $this->getParameter('password');
     }
 
-    public function setAutoClose($value)
+    public function setPassword(string $password): self
     {
-        return $this->setParameter('autoClose', $value);
+        return $this->setParameter('password', $password);
     }
 
-    public function getCcName()
+    public function getCustomerId(): string
     {
-        return $this->getParameter('ccName');
+        return $this->getParameter('customerId');
     }
 
-    public function setCcName($value)
+    public function setCustomerId(string $customerId): self
     {
-        return $this->setParameter('ccName', $value);
+        return $this->setParameter('customerId', $customerId);
     }
 
-    public function getShowLanguages()
+    public function getTerminalId(): string
     {
-        return $this->getParameter('showLanguages');
+        return $this->getParameter('terminalId');
     }
 
-    public function setShowLanguages($value)
+    public function setTerminalId(string $terminalId): self
     {
-        return $this->setParameter('showLanguages', $value);
+        return $this->setParameter('terminalId', $terminalId);
     }
 
-    public function getPaymentMethods()
+    public function getDefaultParameters()
     {
-        return $this->getParameter('paymentMethods');
+        return [
+            'testMode' => false,
+        ];
     }
 
-    public function setPaymentMethods($value)
+    public function authorizeDirect(array $parameters): AbstractRequest
     {
-        return $this->setParameter('paymentMethods', $value);
+        return $this->createRequest(AuthorizeDirectRequest::class, $parameters);
     }
 
-    public function getDelivery()
-    {
-        return $this->getParameter('delivery');
-    }
-
-    public function setDelivery($value)
-    {
-        return $this->setParameter('delivery', $value);
-    }
-
-    public function getAppearance()
-    {
-        return $this->getParameter('appearance');
-    }
-
-    public function setAppearance($value)
-    {
-        return $this->setParameter('appearance', $value);
-    }
-
-    public function authorize(array $parameters = array())
+    public function authorize(array $parameters = [])
     {
         return $this->createRequest(AuthorizeRequest::class, $parameters);
     }
 
-    public function completeAuthorize(array $parameters = array())
+    public function completeAuthorize(array $parameters = [])
     {
         return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
     }
 
-    public function purchase(array $parameters = array())
-    {
-        return $this->authorize($parameters);
-    }
-
-    public function capture(array $parameters = array())
+    public function capture(array $parameters = [])
     {
         return $this->createRequest(CaptureRequest::class, $parameters);
     }

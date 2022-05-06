@@ -1,25 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Saferpay\Message;
+
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 class CaptureRequest extends AbstractRequest
 {
-    protected $endpoint = 'PayCompleteV2.asp';
+    private const ENDPOINT = '/Payment/v1/Transaction/Capture';
 
     public function getData()
     {
-        $this->validate('accountId', 'spPassword', 'amount');
-
-        $data = [
-            'ACCOUNTID' => $this->getAccountId(),
-            'ID' => $this->getTransactionReference(),
-            'spPassword' => $this->getSpPassword()
+        return [
+            'TransactionReference' => [
+                'TransactionId' => $this->getTransactionReference(),
+            ],
         ];
-
-        return $data;
     }
 
-    protected function createResponse($response)
+    protected function getEndpoint(): string
+    {
+        return self::ENDPOINT;
+    }
+
+    protected function createResponse(HttpResponseInterface $response): Response
     {
         return $this->response = new CaptureResponse($this, $response);
     }

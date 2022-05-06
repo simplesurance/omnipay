@@ -1,39 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace simplesurance\Omnipay\Saferpay\Message;
+
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 class AuthorizeRequest extends AbstractRequest
 {
-    protected $endpoint = 'CreatePayInit.asp';
+    private const ENDPOINT = '/Payment/v1/PaymentPage/Initialize';
 
-    public function getAutoClose()
+    public function getTerminalId(): string
     {
-        return $this->getParameter('autoClose');
+        return $this->getParameter('terminalId');
     }
 
-    public function setAutoClose($value)
+    public function setTerminalId(string $terminalId): self
     {
-        return $this->setParameter('autoClose', $value);
-    }
-
-    public function getCcName()
-    {
-        return $this->getParameter('ccName');
-    }
-
-    public function setCcName($value)
-    {
-        return $this->setParameter('ccName', $value);
-    }
-
-    public function getShowLanguages()
-    {
-        return $this->getParameter('showLanguages');
-    }
-
-    public function setShowLanguages($value)
-    {
-        return $this->setParameter('showLanguages', $value);
+        return $this->setParameter('terminalId', $terminalId);
     }
 
     public function getPaymentMethods()
@@ -46,26 +30,6 @@ class AuthorizeRequest extends AbstractRequest
         return $this->setParameter('paymentMethods', $value);
     }
 
-    public function getDelivery()
-    {
-        return $this->getParameter('delivery');
-    }
-
-    public function setDelivery($value)
-    {
-        return $this->setParameter('delivery', $value);
-    }
-
-    public function getAppearance()
-    {
-        return $this->getParameter('appearance');
-    }
-
-    public function setAppearance($value)
-    {
-        return $this->setParameter('appearance', $value);
-    }
-
     public function getOrderId()
     {
         return $this->getParameter('orderId');
@@ -74,36 +38,6 @@ class AuthorizeRequest extends AbstractRequest
     public function setOrderId($value)
     {
         return $this->setParameter('orderId', $value);
-    }
-
-    public function getVtConfig()
-    {
-        return $this->getParameter('vtConfig');
-    }
-
-    public function setVtConfig($value)
-    {
-        return $this->setParameter('vtConfig', $value);
-    }
-
-    public function getNotifyAddress()
-    {
-        return $this->getParameter('notifyAddress');
-    }
-
-    public function setNotifyAddress($value)
-    {
-        return $this->setParameter('notifyAddress', $value);
-    }
-
-    public function getUserNotify()
-    {
-        return $this->getParameter('userNotify');
-    }
-
-    public function setUserNotify($value)
-    {
-        return $this->setParameter('userNotify', $value);
     }
 
     public function getLangId()
@@ -116,87 +50,63 @@ class AuthorizeRequest extends AbstractRequest
         return $this->setParameter('langId', $value);
     }
 
-    public function getDuration()
+    public function getRecurring(): bool
     {
-        return $this->getParameter('duration');
+        return (bool) $this->getParameter('recurring');
     }
 
-    public function setDuration($value)
-    {
-        return $this->setParameter('duration', $value);
-    }
-
-    public function getCardRefId()
-    {
-        return $this->getParameter('cardRefId');
-    }
-
-    public function setCardRefId($value)
-    {
-        return $this->setParameter('cardRefId', $value);
-    }
-
-    public function getRecurring()
-    {
-        return $this->getParameter('recurring');
-    }
-
-    public function setRecurring($value)
+    public function setRecurring(bool $value): self
     {
         return $this->setParameter('recurring', $value);
     }
 
-    public function getCustomerEmail()
-    {
-        return $this->getParameter('customerEmail');
-    }
-
-    public function setCustomerEmail($value)
-    {
-        return $this->setParameter('customerEmail', $value);
-    }
-
     public function getData()
     {
-        $data = array(
-            'ACCOUNTID' => $this->getAccountId(),
-            'AMOUNT' => $this->getAmount() * (10 ** $this->getCurrencyDecimalPlaces()),
-            'CURRENCY' => $this->getCurrency(),
-            'ORDERID' => $this->getOrderId(),
-            'SUCCESSLINK' => $this->getReturnUrl(),
-            'FAILLINK' => $this->getCancelUrl(),
-            'BACKLINK' => $this->getCancelUrl(),
-            'NOTIFYURL' => $this->getNotifyUrl(),
-            'AUTOCLOSE' => $this->getAutoClose(),
-            'CCNAME' => $this->getCcName(),
-            'SHOWLANGUAGES' => $this->getShowLanguages(),
-            'PAYMENTMETHODS' => $this->getPaymentMethods(),
-            'DELIVERY' =>   $this->getDelivery(),
-            'APPEARANCE' => $this->getAppearance(),
-            'VTCONFIG' => $this->getVtConfig(),
-            'NOTIFYADDRESS' => $this->getNotifyAddress(),
-            'USERNOTIFY' => $this->getUserNotify(),
-            'LANGID' => $this->getLangId(),
-            'DURATION' => $this->getDuration(),
-            'EMAIL' => $this->getCustomerEmail()
-        );
+        $data = [
+            'Payment' => [
+                'Amount' => [
+                    'Value' => (string) ($this->getAmount() * (10 ** $this->getCurrencyDecimalPlaces())),
+                    'CurrencyCode' => $this->getCurrency(),
+                ],
+                'OrderId' => $this->getOrderId(),
+                'Description' => mb_convert_encoding($this->getDescription(), 'HTML-ENTITIES', 'UTF-8'),
+            ],
+            'TerminalId' => $this->getTerminalId(),
+            'Payer' => [
+                'LanguageCode' => $this->getLangId(),
+            ],
+            'ReturnUrls' => [
+                'Success' => $this->getReturnUrl(),
+                'Fail' => $this->getCancelUrl(),
+            ],
+            'Notification' => [
+                'NotifyUrl' => $this->getNotifyUrl(),
+            ],
+            'PaymentMethods' => [$this->getPaymentMethods()],
+            'Authentication' => [
+                'ThreeDsChallenge' => 'FORCE',
+            ],
+        ];
 
-        if (extension_loaded('mbstring')) {
-            $data['DESCRIPTION'] = mb_convert_encoding($this->getDescription(), 'HTML-ENTITIES', 'UTF-8');
-        } else {
-            $data['DESCRIPTION'] = $this->getDescription();
-        }
-
-        if ('yes' === $this->getRecurring()) {
-            $data['CARDREFID'] = $this->getCardRefId();
-            $data['RECURRING'] = $this->getRecurring();
+        if ($this->getRecurring()) {
+            $data['Payment']['Recurring'] = ['Initial' => true];
+            $data['RegisterAlias'] = [
+                'IdGenerator' => 'MANUAL',
+                'Id' => $this->getOrderId(),
+                'Lifetime' => 1600,
+            ];
         }
 
         return $data;
     }
 
-    protected function createResponse($response)
+    protected function getEndpoint(): string
     {
-        return $this->response = new AuthorizeResponse($this, $response);
+        return self::ENDPOINT;
+    }
+
+    protected function createResponse(HttpResponseInterface $response): Response
+    {
+        return new AuthorizeResponse($this, $response);
     }
 }

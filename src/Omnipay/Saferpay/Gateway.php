@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace simplesurance\Omnipay\Saferpay;
 
+use LogicException;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\Common\Message\RequestInterface;
 use simplesurance\Omnipay\Interfaces\AuthorizeDirectInterface;
 use simplesurance\Omnipay\Saferpay\Message\AuthorizeDirectRequest;
 use simplesurance\Omnipay\Saferpay\Message\AuthorizeRequest;
@@ -14,7 +17,7 @@ use simplesurance\Omnipay\Saferpay\Message\CompleteAuthorizeRequest;
 
 class Gateway extends AbstractGateway implements AuthorizeDirectInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'SaferPay';
     }
@@ -69,7 +72,7 @@ class Gateway extends AbstractGateway implements AuthorizeDirectInterface
         return $this->setParameter('terminalId', $terminalId);
     }
 
-    public function getDefaultParameters()
+    public function getDefaultParameters(): array
     {
         return [
             'testMode' => false,
@@ -81,18 +84,63 @@ class Gateway extends AbstractGateway implements AuthorizeDirectInterface
         return $this->createRequest(AuthorizeDirectRequest::class, $parameters);
     }
 
-    public function authorize(array $parameters = [])
+    public function authorize(array $options = []): RequestInterface
     {
-        return $this->createRequest(AuthorizeRequest::class, $parameters);
+        return $this->createRequest(AuthorizeRequest::class, $options);
     }
 
-    public function completeAuthorize(array $parameters = [])
+    public function completeAuthorize(array $options = []): RequestInterface
     {
-        return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
+        return $this->createRequest(CompleteAuthorizeRequest::class, $options);
     }
 
-    public function capture(array $parameters = [])
+    public function capture(array $options = []): RequestInterface
     {
-        return $this->createRequest(CaptureRequest::class, $parameters);
+        return $this->createRequest(CaptureRequest::class, $options);
+    }
+
+    public function acceptNotification(array $options = array()): NotificationInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function purchase(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function completePurchase(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function refund(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function fetchTransaction(array $options = []): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function void(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function createCard(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function updateCard(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    public function deleteCard(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
     }
 }

@@ -122,4 +122,9 @@ class Gateway extends AbstractGateway
     {
         throw new LogicException('Not implemented');
     }
+
+    public function capture(array $options = array()): RequestInterface
+    {
+        throw new LogicException('Not implemented');
+    }
 }

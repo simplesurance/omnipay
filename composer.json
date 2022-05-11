@@ -5,7 +5,7 @@
     "keywords": ["omnipay", "payment", "gateway", "provider"],
     "type": "library",
     "require": {
-        "php": ">=7.1",
+        "php": ">=8.0",
         "omnipay/common": "~3.0"
     },
     "require-dev": {

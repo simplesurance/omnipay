@@ -24,14 +24,14 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function authorize(array $parameters = array())
+    public function authorize(array $options = array())
     {
-        return $this->createRequest(AuthorizeRequest::class, $parameters);
+        return $this->createRequest(AuthorizeRequest::class, $options);
     }
 
-    public function completeAuthorize(array $parameters = array())
+    public function completeAuthorize(array $options = array())
     {
-        return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
+        return $this->createRequest(CompleteAuthorizeRequest::class, $options);
     }
 
     public function registerCard(array $parameters = array())

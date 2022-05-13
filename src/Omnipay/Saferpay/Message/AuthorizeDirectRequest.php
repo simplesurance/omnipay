@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace simplesurance\Omnipay\Saferpay\Message;
 
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;

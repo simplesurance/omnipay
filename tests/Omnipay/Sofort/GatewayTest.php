@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace simplesurance\Tests\Omnipay\Sofort;
 
 use Omnipay\Tests\GatewayTestCase;

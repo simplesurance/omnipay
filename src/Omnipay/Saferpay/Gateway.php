@@ -96,49 +96,4 @@ class Gateway extends AbstractGateway implements AuthorizeDirectInterface
     {
         return $this->createRequest(CaptureRequest::class, $options);
     }
-
-    public function acceptNotification(array $options = array()): NotificationInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function purchase(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function completePurchase(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function refund(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function fetchTransaction(array $options = []): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function void(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function createCard(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function updateCard(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
-
-    public function deleteCard(array $options = array()): RequestInterface
-    {
-        throw new LogicException('Not implemented');
-    }
 }

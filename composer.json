@@ -6,6 +6,7 @@
     "type": "library",
     "require": {
         "php": ">=8.0",
+        "ext-mbstring": "*",
         "omnipay/common": "~3.0"
     },
     "require-dev": {

@@ -67,7 +67,7 @@ class AuthorizeRequest extends AbstractRequest
                     'CurrencyCode' => $this->getCurrency(),
                 ],
                 'OrderId' => $this->getOrderId(),
-                'Description' => mb_convert_encoding($this->getDescription(), 'HTML-ENTITIES', 'UTF-8'),
+                'Description' => mb_encode_numericentity($this->getDescription(), [0x80, 0x10FFFF, 0, ~0], 'UTF-8'),
             ],
             'TerminalId' => $this->getTerminalId(),
             'Payer' => [
